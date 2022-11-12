@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter as Router, Routes, Route, Navigate, Link, Outlet, useParams, NavLink} from 'react-router-dom'
+import {BrowserRouter as Router, Routes, Route, Navigate, Link, Outlet, useParams, NavLink, useNavigate, useLocation} from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +16,7 @@ root.render(
       </Route>
       <Route path="/learn/bundles" element={<Bundles />}> 
       </Route>
+      <Route path="/dashboard"element={<Dashboard />}/>
     </Routes>
   </Router>
 );
@@ -71,11 +72,24 @@ function Bundles(){
   );
 }
 function CourseId(){
-  const {courseid} = useParams()
+  const navigate = useNavigate()
+  const {courseid} = useParams();
   return (
     <div>
       <h1>URL params is :{courseid}</h1>
-      <button className='btn btn-warning'>Price</button>
+      <button 
+      onClick={() => {
+        navigate("/dashboard",{state:"999"});
+      }} 
+      className='btn btn-warning'>Price</button>
+    </div>
+  );
+}
+function Dashboard(){
+  const location = useLocation()
+  return (
+    <div>
+      <h1>Info That i got here is {location.state}</h1>
     </div>
   );
 }
